@@ -7,7 +7,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from alembic import context
+from alembic import context  
 
 import os
 environment = os.getenv("FLASK_ENV")
