@@ -6,7 +6,7 @@
 
 Ducksy is a web application clone of Etsy, which provides an online marketplace for handmade items.
 
-Live demo: https://ducksy.herokuapp.com/
+Live demo: https://ducksy-d2b1.onrender.com
 
 It was built using this stack:
 
@@ -23,7 +23,7 @@ It was built using this stack:
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Python](https://img.shields.io/badge/python⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀-376c99?style=for-the-badge&logo=python&logoColor=f7d34b)
 <br/>
-![Heroku](https://img.shields.io/badge/heroku⠀⠀⠀⠀⠀⠀⠀⠀-79589f.svg?style=for-the-badge&logo=heroku&logoColor=FFFFFF)
+![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS_S3⠀⠀⠀⠀⠀-%23232f3e.svg?style=for-the-badge&logo=amazonaws&logoColor=ec912d)
 
 ## Features
