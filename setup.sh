@@ -7,5 +7,4 @@ npm run build --prefix react-app
 pip install -r requirements.txt
 flask db upgrade
 flask seed all
-
 flask run
