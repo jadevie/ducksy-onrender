@@ -8,9 +8,9 @@ from sqlalchemy.sql import func
 products_categories = Table(
     'products_categories',
     db.Model.metadata,
-    Column('product_id', Integer, ForeignKey('products.id',
+    Column('product_id', Integer, ForeignKey(add_prefix_for_prod('products.id'),
            name='fk_product_category_product_id'), primary_key=True),
-    Column('category_id', Integer, ForeignKey('categories.id',
+    Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
            name='fk_product_category_category_id'), primary_key=True)
 )
 
