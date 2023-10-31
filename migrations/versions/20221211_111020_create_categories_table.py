@@ -26,7 +26,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id')
                     )
     if environment == "production":
-        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE categories SET SCHEMA {SCHEMA};")
     # with op.batch_alter_table('orders', schema=None) as batch_op:
     # batch_op.drop_constraint('fk_order_seller_id', type_='foreignkey')
     # batch_op.drop_column('seller_id')
