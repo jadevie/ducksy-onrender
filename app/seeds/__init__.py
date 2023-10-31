@@ -1,8 +1,7 @@
 from flask.cli import AppGroup
 from .seed import seed_all, undo_seed
 
-from app.models.db import environment
-
+from app.models.db import db, environment, SCHEMA
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
 seed_commands = AppGroup('seed')
@@ -17,6 +16,9 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_seed()
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.commit()
     seed_all()
     # Add other seed functions here
 

@@ -1,4 +1,4 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.orm import relationship
@@ -8,10 +8,12 @@ from sqlalchemy.sql import func
 
 class Order(db.Model):
     __tablename__ = "orders"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = Column(Integer, primary_key=True)
     buyer_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_order_buyer_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('users.id'), name='fk_order_buyer_id', ondelete='CASCADE'), nullable=False)
     created_at = Column(DateTime(timezone=True),
                         server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True),

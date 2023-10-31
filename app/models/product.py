@@ -1,4 +1,4 @@
-from .db import db, environment
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.schema import Column, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, DateTime, VARCHAR, DECIMAL, TEXT, BOOLEAN
@@ -17,11 +17,13 @@ products_categories = Table(
 
 class Product(db.Model):
     __tablename__ = "products"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = Column(Integer, primary_key=True)
 
     seller_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_product_seller_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('users.id'), name='fk_product_seller_id', ondelete='CASCADE'), nullable=False)
 
     name = Column(VARCHAR(140), nullable=False)
     price = Column(DECIMAL, nullable=False)

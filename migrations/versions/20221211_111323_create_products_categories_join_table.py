@@ -10,6 +10,7 @@ import sqlalchemy as sa
 
 import os
 environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 # revision identifiers, used by Alembic.
 revision = '4fcf428a4e76'
 down_revision = '08957bb0dc5c'
@@ -28,6 +29,8 @@ def upgrade():
                         ['product_id'], ['products.id'], name='fk_products_category_product_id'),
                     sa.PrimaryKeyConstraint('product_id', 'category_id')
                     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

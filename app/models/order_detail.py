@@ -1,4 +1,4 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.orm import relationship
@@ -8,16 +8,18 @@ from sqlalchemy.sql import func
 
 class OrderDetail(db.Model):
     __tablename__ = "order_details"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = Column(Integer, primary_key=True)
     order_id = Column(Integer, ForeignKey(
-        'orders.id', name='fk_order_detail_order_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('orders.id'), name='fk_order_detail_order_id', ondelete='CASCADE'), nullable=False)
     product_id = Column(Integer, ForeignKey(
-        'products.id', name='fk_order_detail_product_id', ondelete='SET NULL'), nullable=True)
+        add_prefix_for_prod('products.id'), name='fk_order_detail_product_id', ondelete='SET NULL'), nullable=True)
     seller_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_order_detail_seller_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('users.id'), name='fk_order_detail_seller_id', ondelete='CASCADE'), nullable=False)
     buyer_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_order_detail_buyer_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('users.id'), name='fk_order_detail_buyer_id', ondelete='CASCADE'), nullable=False)
     price = Column(DECIMAL, nullable=False)
     quantity = Column(Integer, nullable=False)
 

@@ -1,5 +1,4 @@
-from .db import db
-
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Integer, DateTime, VARCHAR
@@ -8,15 +7,17 @@ from sqlalchemy.sql import func
 
 class Review(db.Model):
     __tablename__ = "reviews"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = Column(Integer, primary_key=True)
 
     buyer_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_review_buyer_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('users.id'), name='fk_review_buyer_id', ondelete='CASCADE'), nullable=False)
     seller_id = Column(Integer, ForeignKey(
-        'users.id', name='fk_review_seller_id', ondelete='CASCADE'))
+        add_prefix_for_prod('users.id'), name='fk_review_seller_id', ondelete='CASCADE'))
     product_id = Column(Integer, ForeignKey(
-        'products.id', name='fk_review_product_id', ondelete='CASCADE'), nullable=False)
+        add_prefix_for_prod('products.id'), name='fk_review_product_id', ondelete='CASCADE'), nullable=False)
     rating = Column(Integer, nullable=False)
     review = Column(VARCHAR(840), nullable=False)
 
