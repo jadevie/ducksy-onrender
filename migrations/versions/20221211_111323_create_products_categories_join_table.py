@@ -30,7 +30,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('product_id', 'category_id')
                     )
     if environment == "production":
-        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE products_categories SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

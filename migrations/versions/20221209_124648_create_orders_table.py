@@ -33,7 +33,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id')
                     )
     if environment == "production":
-        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE orders SET SCHEMA {SCHEMA};")
 
     op.create_table('order_details',
                     sa.Column('id', sa.Integer(), nullable=False),
@@ -52,7 +52,7 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id')
                     )
     if environment == "production":
-        op.execute(f"ALTER TABLE <table_name> SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE order_details SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
