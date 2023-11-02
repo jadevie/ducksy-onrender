@@ -41,7 +41,10 @@ class Product(db.Model):
     reviews = relationship(
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
-        "Category", secondary=products_categories, primaryjoin="Product.id == products_categories.c.product_id", back_populates="products")
+        "Category",
+        back_populates="products",
+        secondary=products_categories)
+        # primaryjoin="Product.id == products_categories.c.product_id",
     purchases = relationship("OrderDetail", back_populates="product")
 
     def to_dict(self):
@@ -75,4 +78,8 @@ class Category(db.Model):
     name = Column(VARCHAR, nullable=False)
 
     products = relationship(
-        "Product", secondary=products_categories, primaryjoin="Category.id == products_categories.c.category_id", back_populates="categories")
+        "Product",
+        back_populates="categories",
+        secondary=products_categories
+        # primaryjoin="Category.id == products_categories.c.category_id",
+      )
