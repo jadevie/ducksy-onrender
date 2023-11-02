@@ -9,11 +9,10 @@ products_categories = Table(
     'products_categories',
     db.Model.metadata,
     Column('product_id', Integer, ForeignKey(add_prefix_for_prod('products.id'),
-           name='fk_product_category_product_id')),
+           name='fk_product_category_product_id'), primary_key=True),
     Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
-           name='fk_product_category_category_id')),
-    Column('id', Integer, primary_key=True),
-    schema = 'ducksy_schema'
+           name='fk_product_category_category_id'), primary_key=True),
+    # schema = 'ducksy_schema'
 )
 
 
@@ -43,12 +42,10 @@ class Product(db.Model):
     reviews = relationship(
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
-        "Category",
-        back_populates="products",
-        secondary=products_categories,
-        primaryjoin="Product.id == products_categories.product_id",
-        secondaryjoin="products_categories.category_id == Category.id"
-    ),
+        "Category",secondary=products_categories,back_populates="products",
+        primaryjoin="Product.id == products_categories.c.product_id",
+        secondaryjoin="products_categories.c.category_id == Category.id"
+    )
     purchases = relationship("OrderDetail", back_populates="product")
 
     def to_dict(self):
@@ -83,8 +80,8 @@ class Category(db.Model):
 
     products = relationship(
         "Product",
-        back_populates="categories",
         secondary=products_categories,
-        primaryjoin="Category.id == products_categories.category_id",
-        secondaryjoin="products_categories.product_id == Product.id"
+        primaryjoin="Category.id == products_categories.c.category_id",
+        secondaryjoin="products_categories.c.product_id == Product.id",
+        back_populates="categories"
       )
