@@ -11,7 +11,8 @@ products_categories = Table(
     Column('product_id', Integer, ForeignKey(add_prefix_for_prod('products.id'),
            name='fk_product_category_product_id'), primary_key=True),
     Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
-           name='fk_product_category_category_id'), primary_key=True)
+           name='fk_product_category_category_id'), primary_key=True),
+    schema = process.env.SCHEMA
 )
 
 
