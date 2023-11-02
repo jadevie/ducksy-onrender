@@ -41,7 +41,7 @@ class Product(db.Model):
     reviews = relationship(
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
-        "Category", secondary=products_categories, back_populates="products")
+        "Category", secondaryjoin=products_categories, back_populates="products")
     purchases = relationship("OrderDetail", back_populates="product")
 
     def to_dict(self):

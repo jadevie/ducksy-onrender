@@ -100,8 +100,6 @@ def run_migrations_online():
             connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
 
 
-
-
         with context.begin_transaction():
             context.execute(f"SET search_path TO {SCHEMA}")
         context.run_migrations()
