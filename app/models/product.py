@@ -42,7 +42,7 @@ class Product(db.Model):
     categories = relationship(
         "Category",
         secondary=products_categories,
-        back_populates="products"
+        back_populates="products",
         primaryjoin="Category.id == products_categories.c.category_id",
         secondaryjoin="Product.id == products_categories.c.product_id"
     )
@@ -82,6 +82,6 @@ class Category(db.Model):
         "Product",
         secondary=products_categories,
         primaryjoin="Product.id == products_categories.c.product_id",
-        secondaryjoin="Category.id == products_categories.c.category_id"
+        secondaryjoin="Category.id == products_categories.c.category_id",
         back_populates="categories"
       )
