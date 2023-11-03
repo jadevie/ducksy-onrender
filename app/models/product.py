@@ -14,7 +14,6 @@ products_categories = Table(
            name='fk_product_category_category_id'), primary_key=True),
 )
 
-
 class Product(db.Model):
     __tablename__ = "products"
     if environment == "production":
@@ -44,8 +43,8 @@ class Product(db.Model):
         "Category",
         secondary=products_categories,
         back_populates="products"
-        # primaryjoin="Product.id == products_categories.c.product_id",
-        # secondaryjoin="products_categories.c.category_id == Category.id"
+        primaryjoin="Category.id == products_categories.c.category_id",
+        secondaryjoin="Product.id == products_categories.c.product_id"
     )
     purchases = relationship("OrderDetail", back_populates="product")
 
@@ -82,7 +81,7 @@ class Category(db.Model):
     products = relationship(
         "Product",
         secondary=products_categories,
-        # primaryjoin="Category.id == products_categories.c.category_id",
-        # secondaryjoin="products_categories.c.product_id == Product.id",
+        primaryjoin="Product.id == products_categories.c.product_id",
+        secondaryjoin="Category.id == products_categories.c.category_id"
         back_populates="categories"
       )
