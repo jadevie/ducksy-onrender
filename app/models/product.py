@@ -12,7 +12,6 @@ products_categories = Table(
            name='fk_product_category_product_id'), primary_key=True),
     Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
            name='fk_product_category_category_id'), primary_key=True),
-    schema = 'ducksy_schema'
 )
 
 
@@ -42,9 +41,11 @@ class Product(db.Model):
     reviews = relationship(
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
-        "Category",secondary=products_categories,back_populates="products",
-        primaryjoin="Product.id == products_categories.c.product_id",
-        secondaryjoin="products_categories.c.category_id == Category.id"
+        "Category",
+        secondary=products_categories,
+        back_populates="products"
+        # primaryjoin="Product.id == products_categories.c.product_id",
+        # secondaryjoin="products_categories.c.category_id == Category.id"
     )
     purchases = relationship("OrderDetail", back_populates="product")
 
@@ -81,7 +82,7 @@ class Category(db.Model):
     products = relationship(
         "Product",
         secondary=products_categories,
-        primaryjoin="Category.id == products_categories.c.category_id",
-        secondaryjoin="products_categories.c.product_id == Product.id",
+        # primaryjoin="Category.id == products_categories.c.category_id",
+        # secondaryjoin="products_categories.c.product_id == Product.id",
         back_populates="categories"
       )
