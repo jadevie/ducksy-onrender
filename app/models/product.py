@@ -44,8 +44,8 @@ class Product(db.Model):
         "Category",
         secondary=products_categories,
         back_populates="products",
-        primaryjoin="Category.id == products_categories.c.category_id",
-        secondaryjoin="Product.id == products_categories.c.product_id"
+        primaryjoin="Product.id == products_categories.c.product_id",
+        secondaryjoin="Category.id == products_categories.c.category_id"
     )
     purchases = relationship("OrderDetail", back_populates="product")
 
@@ -78,14 +78,13 @@ class Category(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR, nullable=False)
 
     products = relationship(
         "Product",
         secondary=products_categories,
-        primaryjoin="Product.id == products_categories.c.product_id",
-        secondaryjoin="Category.id == products_categories.c.category_id",
-        back_populates="categories"
+        back_populates="categories",
+        primaryjoin="Category.id == products_categories.c.category_id",
+        secondaryjoin="Product.id == products_categories.c.product_id"
       )
