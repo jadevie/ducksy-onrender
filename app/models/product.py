@@ -75,6 +75,9 @@ class Product(db.Model):
 
 class Category(db.Model):
     __tablename__ = "categories"
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
 
     id = Column(Integer, primary_key=True)
     name = Column(VARCHAR, nullable=False)
