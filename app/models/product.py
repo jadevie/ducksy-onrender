@@ -44,8 +44,8 @@ class Product(db.Model):
         "Category",
         secondary=products_categories,
         back_populates="products",
-        primaryjoin="Product.id == products_categories.c.product_id",
-        secondaryjoin="Category.id == products_categories.c.category_id"
+        # primaryjoin="Product.id == products_categories.c.product_id",
+        # secondaryjoin="Category.id == products_categories.c.category_id"
     )
     purchases = relationship("OrderDetail", back_populates="product")
 
@@ -85,6 +85,6 @@ class Category(db.Model):
         "Product",
         secondary=products_categories,
         back_populates="categories",
-        primaryjoin="Category.id == products_categories.c.category_id",
-        secondaryjoin="Product.id == products_categories.c.product_id"
+        # primaryjoin="Category.id == products_categories.c.category_id",
+        # secondaryjoin="Product.id == products_categories.c.product_id"
       )
