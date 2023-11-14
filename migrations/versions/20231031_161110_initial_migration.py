@@ -28,10 +28,10 @@ def upgrade():
     sa.PrimaryKeyConstraint('product_id', 'category_id')
     )
 
-    if environment == "production":
-        op.execute(f"ALTER TABLE products_categories SET SCHEMA {SCHEMA};")
+    # if environment == "production":
+    #     op.execute(f"ALTER TABLE products_categories SET SCHEMA {SCHEMA};")
 
-        
+
     op.create_table('categories',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.VARCHAR(), nullable=False),
