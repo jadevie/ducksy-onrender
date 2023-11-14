@@ -50,7 +50,7 @@ class Product(db.Model):
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
         "Category",
-        secondary="ProductCategory",
+        secondary=ProductCategory.__table__,
         back_populates="products",
         # primaryjoin="Product.id == products_categories.c.product_id",
         # secondaryjoin="Category.id == products_categories.c.category_id"
@@ -91,7 +91,7 @@ class Category(db.Model):
 
     products = relationship(
         "Product",
-        secondary="ProductCategory",
+        secondary=ProductCategory.__table__,
         back_populates="categories",
         # primaryjoin="Category.id == products_categories.c.category_id",
         # secondaryjoin="Product.id == products_categories.c.product_id"
