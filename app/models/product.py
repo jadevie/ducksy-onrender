@@ -12,7 +12,6 @@ products_categories = Table(
            name='fk_product_category_product_id'), primary_key=True),
     Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
            name='fk_product_category_category_id'), primary_key=True),
-    schema='ducksy_schema'
 )
 
 class Product(db.Model):
