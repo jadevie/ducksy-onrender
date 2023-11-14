@@ -5,14 +5,23 @@ from sqlalchemy.types import Integer, DateTime, VARCHAR, DECIMAL, TEXT, BOOLEAN
 from sqlalchemy.sql import func
 
 
-products_categories = Table(
-    'products_categories',
-    db.Model.metadata,
-    Column('product_id', Integer, ForeignKey(add_prefix_for_prod('products.id'),
-           name='fk_product_category_product_id'), primary_key=True),
-    Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
-           name='fk_product_category_category_id'), primary_key=True),
-)
+class ProductCategory(db.Model):
+    __tablename__ = 'products_categories'
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
+    product_id = Column(Integer, ForeignKey(add_prefix_for_prod('products.id'), name='fk_product_category_product_id'), primary_key=True)
+    category_id = Column(Integer, ForeignKey(add_prefix_for_prod('categories.id'), name='fk_product_category_category_id'), primary_key=True)
+
+
+# products_categories = Table(
+#     'products_categories',
+#     db.Model.metadata,
+#     Column('product_id', Integer, ForeignKey(add_prefix_for_prod('products.id'),
+#            name='fk_product_category_product_id'), primary_key=True),
+#     Column('category_id', Integer, ForeignKey(add_prefix_for_prod('categories.id'),
+#            name='fk_product_category_category_id'), primary_key=True),
+# )
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -41,7 +50,7 @@ class Product(db.Model):
         "Review", back_populates="product", cascade="all, delete-orphan")
     categories = relationship(
         "Category",
-        secondary=products_categories,
+        secondary="products_categories",
         back_populates="products",
         # primaryjoin="Product.id == products_categories.c.product_id",
         # secondaryjoin="Category.id == products_categories.c.category_id"
@@ -82,7 +91,7 @@ class Category(db.Model):
 
     products = relationship(
         "Product",
-        secondary=products_categories,
+        secondary="products_categories",
         back_populates="categories",
         # primaryjoin="Category.id == products_categories.c.category_id",
         # secondaryjoin="Product.id == products_categories.c.product_id"
