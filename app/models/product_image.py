@@ -37,6 +37,6 @@ class ProductImage(db.Model):
         return {
             "id": self.id,
             "product_id": self.product_id,
-            "url": self.url,
+            "url": str(self.url),
             "preview": self.preview
         }
